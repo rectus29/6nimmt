@@ -17,6 +17,8 @@ public class Main {
 		party.begin();
 		String userName = getUserName( sc);
         log.debug("first user "+userName);
+        userName = getUserName( sc);
+        log.debug("second user "+userName);
 	// write your code here
     }
 
