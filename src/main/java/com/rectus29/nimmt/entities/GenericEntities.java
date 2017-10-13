@@ -21,7 +21,7 @@
  * responsable des dommages pouvant résulter de l'utilisation de ce code
  * source.
  ******************************************************************************/
-package com.rectus29.entities;
+package com.rectus29.nimmt.entities;
 
 public class GenericEntities{
 

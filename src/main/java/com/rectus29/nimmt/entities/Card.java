@@ -1,4 +1,4 @@
-package com.rectus29.entities;
+package com.rectus29.nimmt.entities;
 
 public class Card extends GenericEntities{
 

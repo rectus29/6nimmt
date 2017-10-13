@@ -1,4 +1,4 @@
-package com.rectus29.entities;
+package com.rectus29.nimmt.entities;
 
 import com.sun.istack.internal.NotNull;
 

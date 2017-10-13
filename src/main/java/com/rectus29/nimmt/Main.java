@@ -1,4 +1,4 @@
-package com.rectus29;
+package com.rectus29.nimmt;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

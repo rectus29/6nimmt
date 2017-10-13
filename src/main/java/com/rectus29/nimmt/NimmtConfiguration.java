@@ -1,4 +1,4 @@
-package com.rectus29;
+package com.rectus29.nimmt;
 
 public class NimmtConfiguration{
 
