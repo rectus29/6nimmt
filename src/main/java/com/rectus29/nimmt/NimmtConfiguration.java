@@ -17,9 +17,15 @@ public class NimmtConfiguration{
 	}
 
 	private NimmtConfiguration() {
+		
+		
 	}
 
 	public int getMaxPlayer(){
 	    return Integer.valueOf(resourceBundle.getString("player.max"));
     }
+    
+    public int getMaxPipeLenght(){
+		return Integer.valueOf(resourceBundle.getString("pipe.lenght"));
+	}
 }
