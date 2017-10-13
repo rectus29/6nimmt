@@ -2,9 +2,9 @@ package com.rectus29.entities;
 
 public class Card extends GenericEntities{
 
-	private int weight = 1;
+	private int weight = 0;
 
-	private int value = 1;
+	private int value = 0;
 
 	public Card(int weight, int value) {
 		this.weight = weight;
