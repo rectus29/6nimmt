@@ -1,6 +1,10 @@
 package com.rectus29.nimmt;
 
+import java.util.ResourceBundle;
+
 public class NimmtConfiguration{
+
+    ResourceBundle resourceBundle = ResourceBundle.getBundle("nimmt");
 
 	private static class SingletonHolder{
 		//holder to be threadsafe
@@ -14,4 +18,8 @@ public class NimmtConfiguration{
 
 	private NimmtConfiguration() {
 	}
+
+	public int getMaxPlayer(){
+	    return Integer.valueOf(resourceBundle.getString("player.max"));
+    }
 }

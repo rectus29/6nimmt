@@ -61,4 +61,7 @@ public class Party extends GenericEntities{
 		this.scene = scene;
 		return this;
 	}
+
+    public void begin() {
+    }
 }
