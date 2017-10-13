@@ -16,6 +16,7 @@ public class Party extends GenericEntities{
 	private Scene scene = new Scene();
 
 	public Party() {
+		//TODO fill here
 	}
 
 	public List<Player> getPlayerList() {
@@ -46,6 +47,7 @@ public class Party extends GenericEntities{
 	}
 
     public void begin() {
+		//TODO fill here
     }
 
     public Player addUser(String userName) {
@@ -56,6 +58,7 @@ public class Party extends GenericEntities{
 
     public void startGame() {
         log.debug("party start");
+        //TODO build here the card drill
     }
 
 
