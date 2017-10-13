@@ -33,7 +33,7 @@ public class Pipe extends GenericEntities{
 	public Pipe(Card newCard) {
 		this.cardList.add(newCard);
 	}
-		
+			
 	public List<Card> getCardList() {
 		return cardList;
 	}
