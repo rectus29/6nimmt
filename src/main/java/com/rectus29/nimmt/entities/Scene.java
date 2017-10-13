@@ -23,4 +23,20 @@ public class Scene extends GenericEntities{
 		this.pipe3 = new Pipe(card3);
 		return this;
 	}
+
+	public Pipe getPipe0() {
+		return pipe0;
+	}
+
+	public Pipe getPipe1() {
+		return pipe1;
+	}
+
+	public Pipe getPipe2() {
+		return pipe2;
+	}
+
+	public Pipe getPipe3() {
+		return pipe3;
+	}
 }
