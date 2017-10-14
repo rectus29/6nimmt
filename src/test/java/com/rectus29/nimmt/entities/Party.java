@@ -1,6 +1,6 @@
 package com.rectus29.nimmt.entities;
 
-import com.rectus29.nimmt.configuration.NimmtConfiguration;
+import com.rectus29.nimmt.NimmtConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,10 +15,9 @@ public class Party extends GenericEntities{
 	private List<Card> pickList = new ArrayList<>();
     private List<BattleRound> battleRounds = new ArrayList<>();
 	private Scene scene = new Scene();
-	private NimmtConfiguration configuration;
 
-	public Party(NimmtConfiguration configuration) {
-		this.configuration = configuration;
+	public Party() {
+		//TODO fill here
 	}
 
 	public List<Player> getPlayerList() {
@@ -63,7 +62,7 @@ public class Party extends GenericEntities{
 		buildCardDrill();
 		scene.initScene(getCardOnDrill(), getCardOnDrill(), getCardOnDrill(), getCardOnDrill());
 		for (Player player : playerList) {
-			player.setCardList(getCardList(configuration.getBattleRoundNumber()));
+			player.setCardList(getCardList(NimmtConfiguration.getInstance().getBattleRoundNumber()));
 		}
     }
 

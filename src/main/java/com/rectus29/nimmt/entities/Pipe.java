@@ -1,6 +1,6 @@
 package com.rectus29.nimmt.entities;
 
-import com.rectus29.nimmt.NimmtConfiguration;
+import com.rectus29.nimmt.configuration.NimmtConfigurationResourceBundle;
 import com.rectus29.nimmt.enums.PipeAction;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class Pipe extends GenericEntities{
 	 * pipe is in the report 
 	 */
 	public PipeReport addCard(Card card) {
-		if (this.cardList.size() >= NimmtConfiguration.getInstance().getMaxPipeLenght()) {
+		if (this.cardList.size() >= NimmtConfigurationResourceBundle.getInstance().getMaxPipeLenght()) {
 			return new PipeReport(PipeAction.FLUSH, this.flush());
 		} else {
 			return new PipeReport(card);

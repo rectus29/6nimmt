@@ -1,18 +1,19 @@
-package com.rectus29.nimmt;
+package com.rectus29.nimmt.configuration;
 
 import java.util.ResourceBundle;
 
-public class NimmtConfiguration{
+public class NimmtConfigurationResourceBundle implements NimmtConfiguration {
 
     ResourceBundle resourceBundle = ResourceBundle.getBundle("nimmt");
 
+	@Override
 	public int getBattleRoundNumber() {
 		return Integer.valueOf(resourceBundle.getString("player.card.number"));
 	}
 
 	private static class SingletonHolder{
 		//holder to be threadsafe
-		private final static NimmtConfiguration instance = new NimmtConfiguration();
+		private final static NimmtConfiguration instance = new NimmtConfigurationResourceBundle();
 	}
 	
 	
@@ -20,16 +21,18 @@ public class NimmtConfiguration{
 		return SingletonHolder.instance;
 	}
 
-	private NimmtConfiguration() {
+	private NimmtConfigurationResourceBundle() {
 		
 		
 	}
 
+	@Override
 	public int getMaxPlayer(){
 	    return Integer.valueOf(resourceBundle.getString("player.max"));
     }
     
-    public int getMaxPipeLenght(){
+    @Override
+	public int getMaxPipeLenght(){
 		return Integer.valueOf(resourceBundle.getString("pipe.lenght"));
 	}
 }

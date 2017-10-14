@@ -1,6 +1,7 @@
 package com.rectus29.nimmt;
 
-import com.rectus29.nimmt.entities.BattleRound;
+import com.rectus29.nimmt.configuration.NimmtConfiguration;
+import com.rectus29.nimmt.configuration.NimmtConfigurationResourceBundle;
 import com.rectus29.nimmt.entities.Party;
 import com.rectus29.nimmt.entities.Player;
 import org.apache.logging.log4j.LogManager;
@@ -13,9 +14,10 @@ public class Main {
     public static void main(String[] args) {
 		final Logger log = LogManager.getLogger(Main.class);
 		log.debug("init party");
-		log.debug(NimmtConfiguration.getInstance().getMaxPlayer());
+        NimmtConfiguration configuration = NimmtConfigurationResourceBundle.getInstance();
+		log.debug(configuration.getMaxPlayer());
         Scanner sc = new Scanner(System.in);
-		Party party = new Party();
+		Party party = new Party(configuration);
 
 		party.begin();
 		String userName = getUserName(sc);
