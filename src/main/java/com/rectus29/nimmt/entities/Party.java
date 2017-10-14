@@ -1,5 +1,6 @@
 package com.rectus29.nimmt.entities;
 
+import com.rectus29.nimmt.NimmtConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -58,11 +59,32 @@ public class Party extends GenericEntities{
 
     public void startGame() {
         log.debug("party start");
-        //TODO build here the card drill
+		buildCardDrill();
+		scene.initScene(getCardOnDrill(), getCardOnDrill(), getCardOnDrill(), getCardOnDrill());
+		for (Player player : playerList) {
+			player.setCardList(getCardList(NimmtConfiguration.getInstance().getBattleRoundNumber()));
+		}
     }
 
+    //TODO i think we can create Drill object
 
-    public BattleRound startNewBattleRound() {
+
+    List<Card> getCardList(int cardNubmer){
+		//TODO
+		return null;
+	}
+
+	private Card getCardOnDrill() {
+		//TODO
+		return null;
+	}
+
+	private void buildCardDrill() {
+		//TODO
+	}
+
+
+	public BattleRound startNewBattleRound() {
         BattleRound newBattleRound = new BattleRound(this);
         battleRounds.add(newBattleRound);
         return newBattleRound;

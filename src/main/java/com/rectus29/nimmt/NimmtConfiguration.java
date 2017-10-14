@@ -6,6 +6,10 @@ public class NimmtConfiguration{
 
     ResourceBundle resourceBundle = ResourceBundle.getBundle("nimmt");
 
+	public int getBattleRoundNumber() {
+		return Integer.valueOf(resourceBundle.getString("player.card.number"));
+	}
+
 	private static class SingletonHolder{
 		//holder to be threadsafe
 		private final static NimmtConfiguration instance = new NimmtConfiguration();
