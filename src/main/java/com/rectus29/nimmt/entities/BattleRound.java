@@ -28,4 +28,14 @@ public class BattleRound extends GenericEntities {
     public boolean isReadyToResolve() {
         return payLoadList.size() == party.getPlayerList().size();
     }
+
+    public boolean hasPlayLoad(Player player) {
+        //TODO I have to Iter on playLoadList...A map ?
+        for (PayLoad payLoad : payLoadList) {
+            if(payLoad.getPlayer().equals(player)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

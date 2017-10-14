@@ -46,4 +46,19 @@ public class Player extends GenericEntities{
     public int hashCode() {
         return uuid != null ? uuid.hashCode() : 0;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public Card getCard(int valueCard) throws Exception {
+	    //TODO cardlist is not smart, i need cart with value valueCard
+        //This must be in cardList hndler
+        for (Card card : cardList) {
+            if(card.getValue() == valueCard){
+                return card;
+            }
+        }
+        throw new Exception("This player has no card with value "+valueCard);
+    }
 }

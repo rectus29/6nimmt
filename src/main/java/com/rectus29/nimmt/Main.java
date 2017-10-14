@@ -16,6 +16,7 @@ public class Main {
 		log.debug(NimmtConfiguration.getInstance().getMaxPlayer());
         Scanner sc = new Scanner(System.in);
 		Party party = new Party();
+
 		party.begin();
 		String userName = getUserName(sc);
 		party.addUser(userName).toString();
@@ -28,13 +29,28 @@ public class Main {
             party.startNewBattleRound();
             //TODO Token de battleround for ui sync
             for (Player player : party.getPlayerList()) {
-                party.getCurrentBattleround().addPayload(player, player.getCardList().get(sc.nextLine()));
+                while(!party.getCurrentBattleround().hasPlayLoad(player)) {
+                    try {
+                        party.getCurrentBattleround().addPayload(player, player.getCard(getUserCardValue(player, sc)));
+                    } catch (Exception e) {
+                        SetErrorValueCard();
+                    }
+                }
             }
 
         }
         party.finish();
 
 	// write your code here
+    }
+
+    private static void SetErrorValueCard() {
+        System.out.println("Cette carte n'est pas dans ta main. Essaie encore");
+    }
+
+    private static int getUserCardValue(Player player, Scanner sc) {
+        System.out.println("Joueur "+player.getName()+", Que jouez vous ?");
+        return sc.nextInt();
     }
 
     private static String getUserName(Scanner sc) {
