@@ -2,11 +2,11 @@ package com.rectus29.nimmt;
 
 import com.rectus29.nimmt.configuration.NimmtConfiguration;
 import com.rectus29.nimmt.configuration.NimmtConfigurationResourceBundle;
-import com.rectus29.nimmt.entities.Party;
-import com.rectus29.nimmt.entities.Player;
+import com.rectus29.nimmt.entities.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -27,6 +27,7 @@ public class Main {
         log.debug("second user "+userName);
         party.addUser(userName);
         party.startGame();
+        diplayScene(party.getScene());
         while(party.hasBattleRound()){
             party.startNewBattleRound();
             //TODO Token de battleround for ui sync
@@ -44,6 +45,30 @@ public class Main {
         party.finish();
 
 	// write your code here
+    }
+
+    private static void diplayScene(Scene scene) {
+        displayPipe(scene.getPipe0());
+        System.out.println("");
+        displayPipe(scene.getPipe1());
+        System.out.println("");
+        displayPipe(scene.getPipe2());
+        System.out.println("");
+        displayPipe(scene.getPipe3());
+        System.out.println("");
+    }
+
+    private static void displayPipe(Pipe pipe) {
+        List<Card> cards = pipe.getCardList();
+        int cpt = 0;
+        for (Card card : cards) {
+            displayCard(card);
+            cpt++;
+        }
+    }
+
+    private static void displayCard(Card card) {
+        System.out.printf("%3s", card.getValue());
     }
 
     private static void SetErrorValueCard() {
