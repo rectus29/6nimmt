@@ -28,4 +28,22 @@ public class Card extends GenericEntities{
 		this.value = value;
 		return this;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Card card = (Card) o;
+
+		if (weight != card.weight) return false;
+		return value == card.value;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = weight;
+		result = 31 * result + value;
+		return result;
+	}
 }

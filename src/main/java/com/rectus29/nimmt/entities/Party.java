@@ -71,17 +71,25 @@ public class Party extends GenericEntities{
 
 
     List<Card> getCardList(int cardNubmer){
-		//TODO
-		return null;
+    	List<Card> cards = new ArrayList<>();
+		for (int i = 0; i < cardNubmer; i++) {
+			cards.add(getCardOnDrill());
+		}
+		return cards;
 	}
 
 	private Card getCardOnDrill() {
-		//TODO
-		return null;
+    	long random = Math.round(Math.random()*100);
+    	int pickListIndex =new Long(random%pickList.size()).intValue();
+		Card result = pickList.get(pickListIndex);
+    	pickList.remove(result);
+		return result;
 	}
 
 	private void buildCardDrill() {
-		//TODO
+		for (int i = 0; i < 104; i++) {
+			pickList.add(new Card(0, i));
+		}
 	}
 
 
