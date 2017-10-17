@@ -1,7 +1,8 @@
 package com.rectus29.nimmt.entities;
 
 import com.rectus29.nimmt.configuration.NimmtConfigurationResourceBundle;
-import com.rectus29.nimmt.enums.PipeAction;
+import com.rectus29.nimmt.enums.GameAction;
+import com.rectus29.nimmt.report.SceneReport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +30,11 @@ public class Pipe extends GenericEntities{
 	 * @return a pipe report, if the pipe has flush the pipe action is set to FLUSH and the content of the 
 	 * pipe is in the report 
 	 */
-	public PipeReport addCard(Card card) {
+	public SceneReport addCard(Card card) {
 		if (this.cardList.size() >= NimmtConfigurationResourceBundle.getInstance().getMaxPipeLenght()) {
-			return new PipeReport(PipeAction.FLUSH, this.flush());
+			return new SceneReport(GameAction.FLUSHPIPE, this.flush());
 		} else {
-			return new PipeReport(card);
+			return new SceneReport(card);
 		}
 	}
 
@@ -48,28 +49,12 @@ public class Pipe extends GenericEntities{
 		return out;
 	}
 
-	
-	private class PipeReport{
-
-		private List<Card> cardList = new ArrayList<>();
-
-		private PipeAction pipeAction = PipeAction.ADD;
-
-		public PipeReport(Card card) {
-			this.cardList.add(card);
-		}
-
-		public PipeReport(PipeAction pipeAction, List<Card> flush) {
-			this.cardList = flush;
-			this.pipeAction = pipeAction;
-		}
-
-		public List<Card> getCardList() {
-			return cardList;
-		}
-
-		public PipeAction getPipeAction() {
-			return pipeAction;
-		}
+	/**
+	 * return the max value of the currrent pipe
+	 * @return
+	 */
+	public int getTopValue() {
+		return this.getCardList().get(this.getCardList().size()).getValue();
 	}
+
 }

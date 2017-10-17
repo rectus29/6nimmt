@@ -1,6 +1,9 @@
 package com.rectus29.nimmt.entities;
 
 import com.rectus29.nimmt.configuration.NimmtConfiguration;
+import com.rectus29.nimmt.enums.GameAction;
+import com.rectus29.nimmt.report.GameReport;
+import com.rectus29.nimmt.report.SceneReport;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -111,4 +114,14 @@ public class Party extends GenericEntities{
 	    //TODO check all previous battleround are closed
         return battleRounds.get(battleRounds.size());
     }
+    
+    public GameReport resolveBattleRound() throws Exception {
+		while (getCurrentBattleround().isReadyToResolve()) {
+			CardPayLoad currentPayload = getCurrentBattleround().nextCardPayLoad();
+			SceneReport sceneReport =  scene.addCard(currentPayload.getCard());
+			sceneReport.setPayload(currentPayload);
+			getCurrentBattleround().addSceneReport(sceneReport);
+		}
+		return new GameReport(getCurrentBattleround().getState());
+	}
 }

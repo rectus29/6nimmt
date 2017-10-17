@@ -1,12 +1,15 @@
 package com.rectus29.nimmt.entities;
 
+import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
+
 public class Card extends GenericEntities{
 
-	private int weight = 0;
+	private int weight = 1;
 
 	private int value = 0;
 
-	public Card(int weight, int value) {
+	public Card(@Nullable int value,@NotNull int weight) {
 		this.weight = weight;
 		this.value = value;
 	}

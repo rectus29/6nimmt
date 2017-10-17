@@ -1,42 +1,50 @@
 package com.rectus29.nimmt.entities;
 
+import com.rectus29.nimmt.enums.GameAction;
+import com.rectus29.nimmt.report.SceneReport;
 import com.sun.istack.internal.NotNull;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class Scene extends GenericEntities{
 
-	private Pipe pipe0;
-
-	private Pipe pipe1;
-
-	private Pipe pipe2;
-
-	private Pipe pipe3;
-
+	private List<Pipe> pipeList = new ArrayList<>();	
+	
 	public Scene() {
 	}
 
 	public Scene initScene(@NotNull Card card0, @NotNull Card card1, @NotNull Card card2,
 			@NotNull Card card3) {
-		this.pipe0 = new Pipe(card0);
-		this.pipe1 = new Pipe(card1);
-		this.pipe2 = new Pipe(card2);
-		this.pipe3 = new Pipe(card3);
+		this.pipeList.add(new Pipe(card0));
+		this.pipeList.add(new Pipe(card1));
+		this.pipeList.add(new Pipe(card2));
+		this.pipeList.add(new Pipe(card3));
 		return this;
 	}
 
-	public Pipe getPipe0() {
-		return pipe0;
-	}
-
-	public Pipe getPipe1() {
-		return pipe1;
-	}
-
-	public Pipe getPipe2() {
-		return pipe2;
-	}
-
-	public Pipe getPipe3() {
-		return pipe3;
+	public SceneReport addCard(Card card){
+		Collections.sort(this.pipeList, new Comparator<Pipe>(){
+			@Override
+			public int compare(Pipe o1, Pipe o2) {
+				if(o1.getTopValue() > o2.getTopValue()){
+					return -1;
+				}else if (o1.getTopValue() < o2.getTopValue()){
+					return 1;
+				}
+				return 0;
+			}
+		});
+		//normal case 
+		for (Pipe pipe : pipeList) {
+			if(card.getValue() > pipe.getTopValue()){
+				return pipe.addCard(card);
+			}
+		}
+		//if no suitable pipe found return a report 
+		return new SceneReport(GameAction.PICKPIPE, card);
+		
 	}
 }

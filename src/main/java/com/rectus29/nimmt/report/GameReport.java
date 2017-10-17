@@ -21,17 +21,8 @@
  * responsable des dommages pouvant résulter de l'utilisation de ce code
  * source.
  ******************************************************************************/
-package com.rectus29.nimmt.entities;
+package com.rectus29.nimmt.report;
 
-public abstract class PayLoad extends GenericEntities{
-	
-	protected Player player;
-	
-	public PayLoad(Player player) {
-		this.player = player;
-	}
+public interface GameReport{
 
-	public Player getPlayer() {
-		return player;
-	}
 }
