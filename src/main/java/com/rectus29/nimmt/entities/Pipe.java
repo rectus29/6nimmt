@@ -38,6 +38,10 @@ public class Pipe extends GenericEntities{
 		}
 	}
 
+    public SceneReport forceFlush() {
+        return new SceneReport(GameAction.FLUSHPIPE, this.flush());
+    }
+
 	/**
 	 * this function flush the current pipe and return the content of the pipe
 	 *
@@ -54,7 +58,7 @@ public class Pipe extends GenericEntities{
 	 * @return
 	 */
 	public int getTopValue() {
-		return this.getCardList().get(this.getCardList().size()).getValue();
+		return this.getCardList().get(this.getCardList().size() -1 ).getValue();
 	}
 
 }

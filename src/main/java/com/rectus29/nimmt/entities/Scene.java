@@ -45,6 +45,14 @@ public class Scene extends GenericEntities{
 		}
 		//if no suitable pipe found return a report 
 		return new SceneReport(GameAction.PICKPIPE, card);
-		
 	}
+
+    public List<Pipe> getPipeList() {
+        return pipeList;
+    }
+
+    public SceneReport flush(int pipeNumber){
+        return pipeList.get(pipeNumber).forceFlush();
+    }
+
 }

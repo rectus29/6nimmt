@@ -65,7 +65,7 @@ public class SceneReport implements GameReport{
 		return this.payload.getPlayer();
 	}
 
-	public void setPayload(CardPayLoad payload) {
+	public void setPayload(PayLoad payload) {
 		this.payload = payload;
 	}
 

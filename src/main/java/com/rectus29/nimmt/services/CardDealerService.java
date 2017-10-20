@@ -13,11 +13,15 @@ public class CardDealerService {
 	public CardDealerService() {
 		this.refCardList = initRefPickList();
 	}
-	
-	
-	public Party initParty(Party party){
+
+    private List<Card> initRefPickList() {
+	    return new ArrayList<>();
+    }
+
+
+    public Party initParty(Party party){
 		List<Card> currentPickList = new ArrayList<>(refCardList);
-		
+		return null;
 	}
 	
 	

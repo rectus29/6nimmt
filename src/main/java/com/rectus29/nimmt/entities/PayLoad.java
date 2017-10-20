@@ -23,6 +23,8 @@
  ******************************************************************************/
 package com.rectus29.nimmt.entities;
 
+import com.rectus29.nimmt.report.SceneReport;
+
 public abstract class PayLoad extends GenericEntities{
 	
 	protected Player player;
@@ -34,4 +36,6 @@ public abstract class PayLoad extends GenericEntities{
 	public Player getPlayer() {
 		return player;
 	}
+
+    public abstract SceneReport act(Scene scene) ;
 }

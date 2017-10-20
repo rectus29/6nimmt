@@ -10,49 +10,49 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Party extends GenericEntities{
+public class Party extends GenericEntities {
 
     final Logger log = LogManager.getLogger(Party.class);
-	
-	private List<Player> playerList = new ArrayList<>();
-	private List<Card> pickList = new ArrayList<>();
+
+    private List<Player> playerList = new ArrayList<>();
+    private List<Card> pickList = new ArrayList<>();
     private List<BattleRound> battleRounds = new ArrayList<>();
-	private Scene scene = new Scene();
-	private NimmtConfiguration configuration;
+    private Scene scene = new Scene();
+    private NimmtConfiguration configuration;
 
-	public Party(NimmtConfiguration configuration) {
-		this.configuration = configuration;
-	}
+    public Party(NimmtConfiguration configuration) {
+        this.configuration = configuration;
+    }
 
-	public List<Player> getPlayerList() {
-		return playerList;
-	}
+    public List<Player> getPlayerList() {
+        return playerList;
+    }
 
-	public Party setPlayerList(List<Player> playerList) {
-		this.playerList = playerList;
-		return this;
-	}
+    public Party setPlayerList(List<Player> playerList) {
+        this.playerList = playerList;
+        return this;
+    }
 
-	public List<Card> getPickList() {
-		return pickList;
-	}
+    public List<Card> getPickList() {
+        return pickList;
+    }
 
-	public Party setPickList(List<Card> pickList) {
-		this.pickList = pickList;
-		return this;
-	}
+    public Party setPickList(List<Card> pickList) {
+        this.pickList = pickList;
+        return this;
+    }
 
-	public Scene getScene() {
-		return scene;
-	}
+    public Scene getScene() {
+        return scene;
+    }
 
-	public Party setScene(Scene scene) {
-		this.scene = scene;
-		return this;
-	}
+    public Party setScene(Scene scene) {
+        this.scene = scene;
+        return this;
+    }
 
     public void begin() {
-		//TODO fill here
+        //TODO fill here
     }
 
     public Player addUser(String userName) {
@@ -63,47 +63,47 @@ public class Party extends GenericEntities{
 
     public void startGame() {
         log.debug("party start");
-		buildCardDrill();
-		scene.initScene(getCardOnDrill(), getCardOnDrill(), getCardOnDrill(), getCardOnDrill());
-		for (Player player : playerList) {
-			player.setCardList(getCardList(configuration.getBattleRoundNumber()));
-		}
+        buildCardDrill();
+        scene.initScene(getCardOnDrill(), getCardOnDrill(), getCardOnDrill(), getCardOnDrill());
+        for (Player player : playerList) {
+            player.setCardList(getCardList(configuration.getBattleRoundNumber()));
+        }
     }
 
     //TODO i think we can create Drill object
 
 
-    List<Card> getCardList(int cardNubmer){
-    	List<Card> cards = new ArrayList<>();
-		for (int i = 0; i < cardNubmer; i++) {
-			cards.add(getCardOnDrill());
-		}
-		return cards;
-	}
+    List<Card> getCardList(int cardNubmer) {
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < cardNubmer; i++) {
+            cards.add(getCardOnDrill());
+        }
+        return cards;
+    }
 
-	private Card getCardOnDrill() {
-    	long random = Math.round(Math.random()*100);
-    	int pickListIndex =new Long(random%pickList.size()).intValue();
-		Card result = pickList.get(pickListIndex);
-    	pickList.remove(result);
-		return result;
-	}
+    private Card getCardOnDrill() {
+        long random = Math.round(Math.random() * 100);
+        int pickListIndex = new Long(random % pickList.size()).intValue();
+        Card result = pickList.get(pickListIndex);
+        pickList.remove(result);
+        return result;
+    }
 
-	private void buildCardDrill() {
-		for (int i = 0; i < 104; i++) {
-			pickList.add(new Card(0, i));
-		}
-	}
+    private void buildCardDrill() {
+        for (int i = 0; i < 104; i++) {
+            pickList.add(new Card(i, 0));
+        }
+    }
 
 
-	public BattleRound startNewBattleRound() {
-        BattleRound newBattleRound = new BattleRound(this);
+    public BattleRound startNewBattleRound() {
+        BattleRound newBattleRound = new BattleRound();
         battleRounds.add(newBattleRound);
         return newBattleRound;
     }
 
     public boolean hasBattleRound() {
-	    return false;
+        return battleRounds.size() < 10;
     }
 
     public void finish() {
@@ -111,17 +111,32 @@ public class Party extends GenericEntities{
     }
 
     public BattleRound getCurrentBattleround() {
-	    //TODO check all previous battleround are closed
-        return battleRounds.get(battleRounds.size());
+        //TODO check all previous battleround are closed
+        return battleRounds.get(battleRounds.size() -1 );
     }
-    
-    public GameReport resolveBattleRound() throws Exception {
-		while (getCurrentBattleround().isReadyToResolve()) {
-			CardPayLoad currentPayload = getCurrentBattleround().nextCardPayLoad();
-			SceneReport sceneReport =  scene.addCard(currentPayload.getCard());
-			sceneReport.setPayload(currentPayload);
-			getCurrentBattleround().addSceneReport(sceneReport);
-		}
-		return new GameReport(getCurrentBattleround().getState());
-	}
+
+
+    public BattleRoundReport resolveBattleRound() throws Exception {
+        while (getCurrentBattleround().isReadyToResolve()) {
+            PayLoad currentPayload = getCurrentBattleround().nextPayLoad();
+            SceneReport sceneReport = currentPayload.act(scene);
+            sceneReport.setPayload(currentPayload);
+            getCurrentBattleround().addSceneReport(sceneReport);
+        }
+        return new BattleRoundReport(getCurrentBattleround().getState());
+    }
+
+    public BattleRoundReport addPipePayload(Player p, int userPipeToFlushedNumber) throws Exception {
+        getCurrentBattleround().addPipePayload(p, userPipeToFlushedNumber);
+        return resolveBattleRound();
+    }
+
+    public void addPayload(Player player, Card card) {
+        BattleRound currentBattleround = getCurrentBattleround();
+        currentBattleround.addPayload(player, card);
+        if (currentBattleround.getPayLoadList().size() == getPlayerList().size()) {
+            currentBattleround.setReadyToSolve(true);
+        }
+        ;
+    }
 }

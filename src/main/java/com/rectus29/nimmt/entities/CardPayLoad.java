@@ -1,5 +1,6 @@
 package com.rectus29.nimmt.entities;
 
+import com.rectus29.nimmt.report.SceneReport;
 import com.sun.istack.internal.NotNull;
 
 public class CardPayLoad extends PayLoad implements Comparable<CardPayLoad>{
@@ -39,4 +40,9 @@ public class CardPayLoad extends PayLoad implements Comparable<CardPayLoad>{
 		}
     	return 0;
 	}
+
+    @Override
+    public SceneReport act(Scene scene) {
+        return scene.addCard(getCard());
+    }
 }
