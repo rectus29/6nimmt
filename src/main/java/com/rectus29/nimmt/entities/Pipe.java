@@ -32,14 +32,16 @@ public class Pipe extends GenericEntities{
 	 */
 	public SceneReport addCard(Card card) {
 		if (this.cardList.size() >= NimmtConfigurationResourceBundle.getInstance().getMaxPipeLenght()) {
-			return new SceneReport(GameAction.FLUSHPIPE, this.flush());
+			SceneReport sceneReport = new SceneReport(GameAction.FLUSHPIPE, this.flush(card));
+			return sceneReport;
 		} else {
-			return new SceneReport(card);
+			cardList.add(card);
+			return new SceneReport();
 		}
 	}
 
-    public SceneReport forceFlush() {
-        return new SceneReport(GameAction.FLUSHPIPE, this.flush());
+    public SceneReport forceFlush(Card card) {
+        return new SceneReport(GameAction.FLUSHPIPE, this.flush(card));
     }
 
 	/**
@@ -47,9 +49,10 @@ public class Pipe extends GenericEntities{
 	 *
 	 * @return the card who was present in the pipe before the flush
 	 */
-	private List<Card> flush() {
-		List<Card> out = new ArrayList<>(this.cardList);
-		this.cardList.clear();
+	private List<Card> flush(Card card) {
+		List<Card> out = this.cardList;
+		this.cardList = new ArrayList<>();
+        cardList.add(card);
 		return out;
 	}
 

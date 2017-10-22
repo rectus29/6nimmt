@@ -1,17 +1,18 @@
 package com.rectus29.nimmt.entities;
 
+import com.rectus29.nimmt.enums.GameAction;
 import com.rectus29.nimmt.enums.State;
 import com.rectus29.nimmt.report.SceneReport;
 import com.sun.istack.internal.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 public class BattleRound extends GenericEntities {
 
     private State state = State.WIP;
-    private List<PayLoad> payLoadList = new ArrayList<>();
+    private Set<CardPayLoad> payLoadList = new TreeSet<>();
+    private List<PipePayLoad> pipePayLoadList = new ArrayList<>();
     private List<SceneReport> sceneReportList = new ArrayList<>();
     private boolean readyToSolve  = false;
 
@@ -40,18 +41,25 @@ public class BattleRound extends GenericEntities {
     }
 
 	public PayLoad nextPayLoad() throws Exception {
-		for (PayLoad payLoad : payLoadList) {
-			boolean found = false;
-			for (SceneReport sceneReport : sceneReportList) {
-				if (sceneReport.getPayload() == payLoad) {
-					found = true;
-				}
-			}
-			if(!found){
-				return payLoad;	
-			}
-		}
-		throw new Exception("missing in translation");
+        if(pipePayLoadList != null && !pipePayLoadList.isEmpty()) {
+            PipePayLoad pipePayLoad = pipePayLoadList.get(pipePayLoadList.size() - 1);
+            pipePayLoadList.remove(pipePayLoad);
+            return pipePayLoad;
+        }
+        CardPayLoad result = null;
+        for (CardPayLoad cardPayLoad : payLoadList) {
+            result = cardPayLoad;
+            break;
+        }
+        if(result == null){
+            throw new Exception("missing in translation");
+        }
+        payLoadList.remove(result);
+        if(payLoadList.size() == 0) {
+            readyToSolve = false;
+            state = State.CLOSED;
+        }
+        return result;
 	}
 
 	/**
@@ -64,10 +72,13 @@ public class BattleRound extends GenericEntities {
 	    switch (sceneReport.getGameAction()){
             case PICKPIPE:
                 state = State.WAITUSERACTION;
+                break;
             case ADDTOPIPE:
                 state = State.CLOSED;
+                break;
             case FLUSHPIPE:
                 state = State.CLOSED;
+                break;
 
         }
     	this.sceneReportList.add(sceneReport);
@@ -83,7 +94,7 @@ public class BattleRound extends GenericEntities {
     }
 
     public BattleRound addPipePayload(Player p, int userPipeToFlushedNumber) {
-        this.payLoadList.add(new PipePayLoad(p, userPipeToFlushedNumber));
+        this.pipePayLoadList.add(new PipePayLoad((CardPayLoad) this.sceneReportList.get(sceneReportList.size()-1).getPayload(), userPipeToFlushedNumber));
         this.readyToSolve = true;
         return this;
     }
@@ -92,8 +103,21 @@ public class BattleRound extends GenericEntities {
         this.readyToSolve = readyToSolve;
     }
 
-    public List<PayLoad> getPayLoadList() {
+    public Set<CardPayLoad> getPayLoadList() {
         return payLoadList;
+    }
+
+    public BattleRoundReport resolve(Scene scene) throws Exception {
+        while (isReadyToResolve()) {
+            PayLoad currentPayload = nextPayLoad();
+            SceneReport sceneReport = currentPayload.act(scene);
+            if(sceneReport.getGameAction().equals(GameAction.PICKPIPE)){
+                readyToSolve  = false;
+            }
+            sceneReport.setPayload(currentPayload);
+            addSceneReport(sceneReport);
+        }
+       return new BattleRoundReport(getState());
     }
 }
 

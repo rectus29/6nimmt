@@ -117,13 +117,7 @@ public class Party extends GenericEntities {
 
 
     public BattleRoundReport resolveBattleRound() throws Exception {
-        while (getCurrentBattleround().isReadyToResolve()) {
-            PayLoad currentPayload = getCurrentBattleround().nextPayLoad();
-            SceneReport sceneReport = currentPayload.act(scene);
-            sceneReport.setPayload(currentPayload);
-            getCurrentBattleround().addSceneReport(sceneReport);
-        }
-        return new BattleRoundReport(getCurrentBattleround().getState());
+        return getCurrentBattleround().resolve(scene);
     }
 
     public BattleRoundReport addPipePayload(Player p, int userPipeToFlushedNumber) throws Exception {
@@ -133,10 +127,10 @@ public class Party extends GenericEntities {
 
     public void addPayload(Player player, Card card) {
         BattleRound currentBattleround = getCurrentBattleround();
+        player.getCardList().remove(card);
         currentBattleround.addPayload(player, card);
         if (currentBattleround.getPayLoadList().size() == getPlayerList().size()) {
             currentBattleround.setReadyToSolve(true);
         }
-        ;
     }
 }

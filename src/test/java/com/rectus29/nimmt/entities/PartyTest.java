@@ -1,5 +1,5 @@
 package com.rectus29.nimmt.entities;
 
-public class Party {
+public class PartyTest {
 
 }

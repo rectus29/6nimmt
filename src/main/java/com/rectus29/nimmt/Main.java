@@ -32,8 +32,8 @@ public class Main {
         for (Player player : party.getPlayerList()) {
             diplayUserGame(player);
         }
-        diplayScene(party.getScene());
         while (party.hasBattleRound()) {
+            diplayScene(party.getScene());
             party.startNewBattleRound();
             //TODO Token de battleround for ui sync
             for (Player player : party.getPlayerList()) {
@@ -74,10 +74,12 @@ public class Main {
     }
 
     private static void diplayScene(Scene scene) {
+        System.out.println("--------------SCENE-----------------");
         for (Pipe pipe : scene.getPipeList()) {
             displayPipe(pipe);
             System.out.println("");
         }
+        System.out.println("-----------------------------------");
     }
 
     private static void displayPipe(Pipe pipe) {

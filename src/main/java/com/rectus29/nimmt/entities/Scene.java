@@ -51,8 +51,8 @@ public class Scene extends GenericEntities{
         return pipeList;
     }
 
-    public SceneReport flush(int pipeNumber){
-        return pipeList.get(pipeNumber).forceFlush();
+    public SceneReport flush(int pipeNumber, Card card){
+        return pipeList.get(pipeNumber).forceFlush(card);
     }
 
 }

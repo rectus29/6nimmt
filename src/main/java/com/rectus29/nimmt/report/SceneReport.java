@@ -39,8 +39,7 @@ public class SceneReport implements GameReport{
 	private PayLoad payload;	
 
 
-	public SceneReport(Card card) {
-		this.cardList.add(card);
+	public SceneReport() {
 	}
 
 	public SceneReport(GameAction gameAction, Card card) {
