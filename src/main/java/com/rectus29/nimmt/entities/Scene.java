@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Scene extends GenericEntities{
 
-	private List<Pipe> pipeList = new ArrayList<>();	
+	private List<Pipe> pipeList = new ArrayList<>();
 	
 	public Scene() {
 	}
@@ -26,7 +26,8 @@ public class Scene extends GenericEntities{
 	}
 
 	public SceneReport addCard(Card card){
-		Collections.sort(this.pipeList, new Comparator<Pipe>(){
+        ArrayList<Pipe> list = new ArrayList<>(this.pipeList);
+        Collections.sort(list, new Comparator<Pipe>(){
 			@Override
 			public int compare(Pipe o1, Pipe o2) {
 				if(o1.getTopValue() > o2.getTopValue()){
@@ -38,7 +39,7 @@ public class Scene extends GenericEntities{
 			}
 		});
 		//normal case 
-		for (Pipe pipe : pipeList) {
+		for (Pipe pipe : list) {
 			if(card.getValue() > pipe.getTopValue()){
 				return pipe.addCard(card);
 			}
