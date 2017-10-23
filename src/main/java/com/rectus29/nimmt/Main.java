@@ -60,7 +60,7 @@ public class Main {
 
     private static void displayHand(Player player) {
         for (Card card : player.getCardList()) {
-            System.out.printf("%3s", card.getValue());
+			displayCard(card);
         }
         System.out.println();
     }
@@ -75,10 +75,12 @@ public class Main {
 
     private static void diplayScene(Scene scene) {
         System.out.println("--------------SCENE-----------------");
-        for (Pipe pipe : scene.getPipeList()) {
-            displayPipe(pipe);
-            System.out.println("");
-        }
+		for (int i = 0; i < scene.getPipeList().size(); i++) {
+			System.out.printf(i + " -");
+			displayPipe(scene.getPipeList().get(i));
+			System.out.println("");
+			
+		}
         System.out.println("-----------------------------------");
     }
 
@@ -92,7 +94,7 @@ public class Main {
     }
 
     private static void displayCard(Card card) {
-        System.out.printf("%3s", card.getValue());
+		System.out.printf("%3s", " " + card.getValue() + "|" + card.getWeight() + " ");
     }
 
     private static void SetErrorValueCard() {

@@ -4,6 +4,7 @@ import com.rectus29.nimmt.configuration.NimmtConfiguration;
 import com.rectus29.nimmt.enums.GameAction;
 import com.rectus29.nimmt.report.GameReport;
 import com.rectus29.nimmt.report.SceneReport;
+import com.rectus29.nimmt.services.CardDealerService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -63,11 +64,8 @@ public class Party extends GenericEntities {
 
     public void startGame() {
         log.debug("party start");
-        buildCardDrill();
-        scene.initScene(getCardOnDrill(), getCardOnDrill(), getCardOnDrill(), getCardOnDrill());
-        for (Player player : playerList) {
-            player.setCardList(getCardList(configuration.getBattleRoundNumber()));
-        }
+		new CardDealerService().initParty(this);
+		scene.initScene(getCardOnDrill(), getCardOnDrill(), getCardOnDrill(), getCardOnDrill());
     }
 
     //TODO i think we can create Drill object
@@ -87,12 +85,6 @@ public class Party extends GenericEntities {
         Card result = pickList.get(pickListIndex);
         pickList.remove(result);
         return result;
-    }
-
-    private void buildCardDrill() {
-        for (int i = 0; i < 104; i++) {
-            pickList.add(new Card(i, 0));
-        }
     }
 
 
