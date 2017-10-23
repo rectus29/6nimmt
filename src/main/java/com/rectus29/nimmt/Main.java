@@ -22,10 +22,12 @@ public class Main {
         Party party = new Party(configuration);
 
         party.begin();
-        String userName = getUserName(sc);
+//        String userName = getUserName(sc);
+        String userName = "Emi";
         party.addUser(userName).toString();
         log.debug("first user " + userName);
-        userName = getUserName(sc);
+//        userName = getUserName(sc);
+        userName = "Jno";
         log.debug("second user " + userName);
         party.addUser(userName);
         party.startGame();
@@ -51,8 +53,8 @@ public class Main {
                 diplayScene(party.getScene());
                 Player p =  party.getCurrentBattleround().getWaitedUser();
                 party.addPipePayload(p, getUserPipeToFlushedNumber(p, sc));
+                report = party.resolveBattleRound();
             }
-
         }
         party.finish();
         // write your code here
@@ -66,7 +68,7 @@ public class Main {
     }
 
     private static int getUserPipeToFlushedNumber(Player p, Scanner sc) {
-        System.out.println("Joueur " + p+" Quel ligne voulez vous rammasser ");
+        System.out.println("Joueur " + p.getName() +" Quel ligne voulez vous rammasser ");
         return sc.nextInt();
     }
 
